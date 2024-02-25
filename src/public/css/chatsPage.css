@@ -1,0 +1,42 @@
+table {
+    width: 500px;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 2px solid #808b84;
+    padding: 12px;
+    text-align: center;
+    background-color: #424242;
+    color: #ffffff;
+}
+
+th {
+    background-color: #1d1c1c;
+}
+
+td button {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #1d1c1c;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#active-chats {
+    color: white;
+}
+
+#main {
+    margin-top: 70px;
+}
+
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: rgb(44, 44, 44);
+}

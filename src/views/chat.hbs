@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<script src="https://unpkg.com/vue@3"></script>
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+<div id="main">
+
+<head>
+    <meta charset="utf-8" />
+    <title>\{{titlePage}}</title>
+    <link rel="stylesheet" href="/css/chatPage.css" />
+</head>
+</body>
+{{> navigate}}
+
+<section class="msger">
+  <main class="msger-chat"> 
+
+    {{#each chat.messages}}
+    <div class="{{#if (eq ../user.id this.message.user.id)}} 
+                    right-msg
+                {{else}}
+                    left-msg
+                {{/if}}">
+        <div class="msg-bubble">
+            <div class="msg-info">
+                <div class="msg-info-name">{{this.message.user.name}}</div>
+            </div>  
+
+            <div class="msg-text"> {{this.message.context}} </div>
+
+            <div class="msg-info">
+                <div class="msg-info-time">{{getFormattedTime this.message.time}}</div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+
+  </main>
+
+  <div class="msger-inputarea">
+    <input type="text" v-model="enteredMessage" class="msger-input" v-on:keyup.enter="submitMessage" placeholder="Write your message...">
+    <button type="submit" @click="submitMessage()" class="msger-send-btn">Send</button>
+  </div>
+
+</section>
+
+<body>
+
+</div>
+
+<script src="/js/chat.vue.js"></script>

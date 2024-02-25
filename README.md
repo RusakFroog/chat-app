@@ -1,2 +1,3 @@
 # chat-app
-Chat application on JS with expressJS, Socket.IO, HBS
+
+Chat application with using expressJS, Socket.IO, HBS, mysql2-async, VueJS

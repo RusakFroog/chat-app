@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <title>Regiter</title>    
+    <link rel="stylesheet" href="/css/registerPage.css" />
+    
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+</body>
+
+{{> navigate}}
+
+<div id="main">
+
+<div class="form">  
+    <ul class="tab-group">
+        <li class="tab" :class="{ 'active': isRegisterForm }"><a @click="toRegister()">Sign Up</a></li>
+        <li class="tab" :class="{ 'active': !isRegisterForm }"><a @click="toLogin()">Log In</a></li>
+    </ul>
+      
+    <div class="tab-content">
+        <div id="signup" v-if="isRegisterForm">
+            <h1>Sign Up</h1>
+
+            <div id="form-signup">
+                <div class="field-wrap">
+                    <input v-model="registerForm.loginField" type="text" required placeholder="Login" autocomplete="off" />
+                </div>
+            
+                <div class="field-wrap">
+                    <input v-model="registerForm.passwordField" type="password" required  placeholder="Password" autocomplete="off"/>
+                </div>
+            
+                <div class="field-wrap">
+                    <input v-model="registerForm.passwordRepeatField" type="password" required placeholder="Repeat Password" autocomplete="off"/>
+                </div>
+
+                <p v-if="errorMessage != undefined || errorMessage != '' " style="color: red;" class="error-msg">\{{errorMessage}}</p>
+                <button @click="registerAccount()" class="button button-block"/>REGISTER</button>
+            </div>
+        </div>
+
+        <div id="login" v-else>
+            <h1>Log In</h1>
+          
+            <div id="form-login">
+                <div class="field-wrap">
+                    <input v-model="loginForm.loginField" type="text" required placeholder="Login" autocomplete="off"/>
+                </div>
+            
+                <div class="field-wrap">
+                    <input v-model="loginForm.passwordField" type="password" required placeholder="Password" autocomplete="off"/>
+                </div>
+
+                <p v-if="errorMessage != undefined || errorMessage != '' " style="color: red;" class="error-msg">\{{errorMessage}}</p>
+                <button @click="loginAccount()" class="button button-block"/>LOG IN</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script src="/js/register.vue.js"></script>
+
+<body>

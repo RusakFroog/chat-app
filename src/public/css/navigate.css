@@ -1,0 +1,31 @@
+#container-navigate {
+    left: 0;
+    top: 0;
+    width: 100%;
+    position: fixed;
+    color: rgb(197, 191, 191);
+    display: block;
+    list-style-type: none;
+    overflow: hidden;
+    border-radius: 5px;
+    background-color: rgb(32, 32, 32);
+}
+
+#container-navigate li {
+    float: left;
+    display: inline;
+}
+
+#container-navigate a {
+    display:inline;
+    padding: 15px;
+    color: rgb(197, 191, 191);
+    text-decoration-line: none;
+    font-size: 30px;
+    text-align: center;
+}
+
+#container-navigate a:hover {
+    color: cadetblue;
+    background-color: rgb(46, 45, 45);
+}
