@@ -12,14 +12,17 @@
 {{> navigate}}
 
 <div id="main">
+    <button id="createchat-button"> <a href="/chat/create">Create your chat</a> </button>
+
     <h1 id="active-chats">Active chats</h1>
+    <p style="color: white;" >⭐ - your chats</p>
     <table>
         {{!-- Headers --}}
         <tr> <th>Id</th> <th>Name</th> <th>Users</th> </tr>
         {{#each chats}}
             <tr>
-                <td> {{this.id}} </td> 
-                <td> {{this.name}} </td> 
+                <td> {{this.id}} </td>
+                <td> {{#if (eq ../user.id this.ownerUser.id)}} ⭐ {{/if}} {{this.name}} </td> 
                 <td> {{this.users.length}} </td> 
                 <td> <button @click="buttonJoinHandler({{this.id}})">Join</button> </td>
             </tr>

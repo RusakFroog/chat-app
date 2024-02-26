@@ -60,6 +60,6 @@ app.use("/user", UserRouter);
 app.use("/", (_, res) => res.redirect(302, "/home"));
 
 server.listen(3000, "localhost", () => {
-    // User.initAllUsers();
-    console.log("Server start listening...");
+    User.initUsersAndChats();
+    console.info("Server start listening...");
 })

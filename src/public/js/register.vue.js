@@ -12,14 +12,16 @@ Vue.createApp({
                 passwordField: "",
             },
 
-            isRegisterForm: true,
+            isRegisterForm: false,
             errorMessage: "",
+            succesMessage: "",
         }
     },
 
     methods: {
         async registerAccount() {
             this.resetErrorMessage();
+            this.resetSuccesMessage();
 
             if (this.registerForm.loginField == "" || this.registerForm.passwordField == "" || this.registerForm.passwordRepeatField == "")
                 return this.sendErrorMessage("Enter Login and Password");
@@ -52,11 +54,16 @@ Vue.createApp({
             if (res.ok !== true)
                 return this.sendErrorMessage(resJson.message);
             
-            window.location.href = "/chats/all";
+            this.sendSuccesMessage(resJson.message);
+            
+            setTimeout(() => {
+                window.location.href = "/chats/all";
+            }, 5000);
         },
     
         async loginAccount() {
             this.resetErrorMessage();
+            this.resetSuccesMessage();
 
             if (this.loginForm.loginField == "" || this.loginForm.passwordField == "")
                 return this.sendErrorMessage("Enter Login and Password");
@@ -73,12 +80,11 @@ Vue.createApp({
                 login: this.loginForm.loginField, 
                 password: this.loginForm.passwordField
             };
-
             
             const res = await fetch("/user/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json", "Accept": "application/json" },
-                body: JSON.stringify({data: loginData}),
+                body: JSON.stringify({loginData: loginData}),
             });
 
             const resJson = await res.json();
@@ -86,16 +92,19 @@ Vue.createApp({
             if (res.ok !== true)
                 return this.sendErrorMessage(resJson.message);
             
-            window.location.href = "/";
+            this.sendSuccesMessage(resJson.message);
+
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 5000);
         },
 
         toLogin() {
             if (this.isRegisterForm == false) 
                 return;
 
-            console.log("TO LOGIN FORM");
-            
             this.resetErrorMessage();
+            this.resetSuccesMessage();
             
             this.isRegisterForm = false;
         },
@@ -104,9 +113,8 @@ Vue.createApp({
             if (this.isRegisterForm == true)
                 return;
             
-            console.log("TO REGISTER FORM");
-
             this.resetErrorMessage();
+            this.resetSuccesMessage();
             
             this.isRegisterForm = true;
         },
@@ -115,9 +123,17 @@ Vue.createApp({
             this.errorMessage = text;
         },
 
+        sendSuccesMessage(text) {
+            this.succesMessage = text;
+        },
+
         resetErrorMessage() {
             this.errorMessage = "";
-        }
+        },
+
+        resetSuccesMessage() {
+            this.succesMessage = "";
+        },
     },
 
     mounted() { 

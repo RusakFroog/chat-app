@@ -35,25 +35,47 @@ class UserController {
             return res.json({message: errorMsg});
         }
 
-        let loginData = req.body.createData;
+        const loginData = data.loginData;
 
         const result = await db.query("SELECT `id`, `password` FROM `users` WHERE `name` = ?", [loginData.login]);
 
         const account = result[0];
-        const realPassword = account.password;
 
-        if (realPassword !== loginData.password) {
+        if (!account) {
             setTimeout(() => {
-                res.status().json({message: "Wrong password!"});
+                res.status(406).json({message: "Wrong login!"});
             }, 1500);
 
             return;
         }
 
+        const accountId = parseInt(account.id);
+        const accountPassword = account.password;
 
+        if (accountPassword !== loginData.password) {
+            setTimeout(() => {
+                res.status(406).json({message: "Wrong password!"});
+            }, 1500);
 
-        res.cookie('myUser', newUser, {maxAge: expiresTime}).status(201).json({message: 'User logged in!'});
+            return;
+        }
+
+        const user = User.getUserById(accountId);
+
+        const expiresTime = 5 * 24 * 60 * 60 * 1000;  // 5 days
+
+        res.cookie('myUser', user, {maxAge: expiresTime}).status(201).json({message: 'User logged in!'});
     }
+
+    /**
+     * @param {request} req 
+     * @param {response} res 
+     */
+    logoutUser(_, res) {
+        res.clearCookie("myUser");
+        
+        res.sendStatus(200);
+    } 
 
     /**
      * @param {request} req 
@@ -79,10 +101,20 @@ class UserController {
             return res.status(412).json({message: isUserDataValid.errorMsg});
 
         const newUser = new User(createData);
+        
+        User.addUserToDB(newUser);
 
-        const expiresTime = 5 * 24 * 60 * 60 * 1000;
+        const expiresTime = 5 * 24 * 60 * 60 * 1000; // 5 days
 
         res.cookie('myUser', newUser, {maxAge: expiresTime}).status(201).json({message: 'User created!'});
+    }
+
+    /**
+     * @param {request} req 
+     * @param {response} res 
+     */
+    getMyName(req, res) {
+        res.json({user: req.cookies.myUser});
     }
 
     /**

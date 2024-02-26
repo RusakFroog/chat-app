@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <title>Create your chat</title>    
+    <link rel="stylesheet" href="/css/creatingChatPage.css" />
+    
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+</body>
+
+{{> navigate}}
+
+<div id="main">
+
+<div class="form">  
+    <div class="tab-content">
+        <div id="signup">
+            <h1>Create your chat</h1>
+
+            <div id="form-signup">
+                <div class="field-wrap">
+                    <input v-model="registerForm.nameChat" type="text" required placeholder="Name chat" autocomplete="off" />
+                </div>
+            
+                {{!-- <div class="field-wrap">
+                    <input v-model="registerForm.passwordField" type="password" required  placeholder="Password" autocomplete="off"/>
+                </div> --}}
+
+                <p v-if="errorMessage != undefined || errorMessage != '' " style="color: red;" class="error-msg">\{{errorMessage}}</p>
+                <button @click="createNewChat()" class="button button-block"/>CREATE</button>
+                <p v-if="succesMessage != undefined || succesMessage != '' " style="color: rgb(54, 170, 0);" class="succes-msg">\{{succesMessage}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script src="/js/creatingChat.vue.js"></script>
+
+<body>

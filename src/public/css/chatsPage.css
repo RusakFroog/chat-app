@@ -28,6 +28,28 @@ td button {
     border-radius: 10px;
 }
 
+#createchat-button {
+    padding: 10px;
+    margin-bottom: 10px;
+    display:list-item;
+    background-color: rgb(37, 37, 36);
+    border: 2px;
+    border-color: rgb(67, 68, 70);
+    border-radius: 5px;
+}
+
+#createchat-button a {
+    padding: 15px;
+    color: rgb(253, 253, 253);
+    text-decoration-line: none;
+    font-size: 15px;
+    text-align: center;
+}
+
+#createchat-button a:hover {
+    color: rgb(37, 93, 126);
+}
+
 #active-chats {
     color: white;
 }

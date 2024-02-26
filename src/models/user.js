@@ -33,6 +33,13 @@ export class User {
         User._allUsers.push(this);
     }
 
+    /**
+     * @param {User} user 
+     */
+    static async addUserToDB(user) {
+        await db.query("INSERT INTO `users` (`name`, `password`, `created_date`) VALUES(?, ?, ?)", [user.name, user._password, new Date()]);
+    }
+
     static createUserFromDB(id, name) {
         const createData = {
             id: id,
@@ -46,15 +53,15 @@ export class User {
         return createdUser;
     }
 
-    static async initAllUsers() {
+    static async initUsersAndChats() {
         const usersTables = await db.query("SELECT * FROM `users`");
 
         usersTables.forEach(async (userData) => {
             const chatsTable = await db.query("SELECT * FROM `chats` WHERE `owner_id` = ?", [userData.id]);
 
-            const chats = [];
-            
             const createdUser = User.createUserFromDB(userData.id, userData.name, userData.password);
+            
+            const chats = [];
 
             chatsTable.forEach(chatData => {
                 const parsedMessages = JSON.parse(chatData.messages);

@@ -1,4 +1,5 @@
 import { User } from "./user.js";
+import { db } from "../models/database.js";
 
 export class Chat {
     /**
@@ -23,10 +24,9 @@ export class Chat {
         this._poolUsers = [];
         
         /**
-         * @private
          * @type {User}
         */
-        this._ownerUser = ownerUser;
+        this.ownerUser = ownerUser;
 
         /**
          * @type {object[]}
@@ -54,17 +54,27 @@ export class Chat {
     }
 
     /**
-     * @param {User} user 
+     * @param {Chat} chat 
      */
-    addUserToChat(user) {
-       this._poolUsers.push(user);
+    static async addChatToDB(chat) {
+        await db.query("INSERT INTO `chats` (`owner_id`, `messages`, `name`) VALUES(?, ?, ?)", [chat.ownerUser.id, JSON.stringify(chat.messages), chat.name]);
+    }
+
+    static valid(data) {
+        const name = data.nameChat;
+
+        if (Chat._allChats.find(c => c.name == name) != undefined) {
+            return {errorMsg: "Chat with same name already exist"};
+        }
+
+        return true;
     }
     
     /**
      * @param {User} user
      * @param {string} message
      */
-    addMessage(user, message) {
+    async addMessage(user, message) {
         const messageObject = {
             context: message,
             time: new Date(),
@@ -79,6 +89,16 @@ export class Chat {
         }
 
         this.messages.push(objectMessage);
+
+        await db.query("UPDATE `chats` SET `messages` = ? WHERE `id` = ?", [JSON.stringify(this.messages), this.id]);
+    }
+
+    /**
+     * @param {User} user 
+     */
+    addUserToChat(user) {
+        if (!this._poolUsers.includes(user))
+            this._poolUsers.push(user);
     }
 
     /**
@@ -87,20 +107,18 @@ export class Chat {
     removeUserFromChat(user) {
         const userIndex = this._poolUsers.indexOf(user);
         
-        if (userIndex < 0)
-            return console.error(`User with id: ${user.id} has index: ${userIndex}`);
-        
-        this._poolUsers.splice(userIndex, 1);
-
-        console.info(`User ${user.id} has been deleted from chat ${this.id}`);
+        if (userIndex >= 0)
+            this._poolUsers.splice(userIndex, 1);
     }
 
-    deleteChat() {
-        this._ownerUser.removeCreatedChat(this);
+    async deleteChat() {
+        this.ownerUser.removeCreatedChat(this);
 
         const index = Chat._allChats.indexOf(this);
 
         Chat._allChats.splice(index, 1);
+
+        await db.query("DELETE FROM `chats` WHERE `id` = ?", [this.id]);
     }
 
     /**

@@ -11,7 +11,7 @@ class ChatController {
         const idChat = req.params["id"];
 
         const chat = Chat.getChatById(parseInt(idChat));
-        const user = req.cookies.myUser;
+        const user = User.getUserById(req.cookies.myUser.id);
 
         chat.addUserToChat(user);
 
@@ -19,9 +19,63 @@ class ChatController {
             chat: chat,
             user: user
         });
+    }
 
-        // TODO: DELETE FOR NON DEV
-        // res.clearCookie("myUser");
+    /**
+     * @param {request} req 
+     * @param {response} res 
+     */
+    getCreatingChat(req, res) {
+        res.render("creatingChat.hbs");
+    }
+
+    /**
+     * @param {request} req 
+     * @param {response} res 
+     */
+    createChat(req, res) {
+        /** @type {User} */
+        const user = User.getUserById(req.cookies.myUser.id);
+
+        if (user == undefined)
+            return res.status(412).json({message: "You need to Sign Up / Log in to create new chat"});
+
+        const data = req.body;
+
+        if (!data) {
+            const errorMsg = "Chat controller (creating): data is empty";
+
+            console.error(errorMsg);
+
+            return res.status(412).json({message: errorMsg});
+        }
+
+        const createData = data.createData;
+        const nameChat = createData.nameChat;
+
+        const chatIsValid = Chat.valid(createData);
+
+        if (chatIsValid != true)
+            return res.status(412).json({message: chatIsValid.errorMsg});
+
+        const newChat = new Chat(user, nameChat);
+
+        Chat.addChatToDB(newChat);
+        user.addCreatedChat(newChat);
+
+        res.json({message: "Chat created succesful"});
+    }
+
+    exitFromChat(req, res) {
+        const chat = Chat.getChatById(req.params["id"]);
+        const user = User.getUserById(req.cookies.myUser.id);
+
+        if (!user)
+            return console.error("User wasn't exist in exit from chat");
+
+        chat.removeUserFromChat(user);
+        
+        res.sendStatus(200);
     }
 
     /**

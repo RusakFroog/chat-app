@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/css/navigate.css" />
+<script src="https://unpkg.com/vue@3"></script>
 
 <ul id="container-navigate">
     <li>
@@ -8,6 +9,51 @@
         <a href="/chats/all">Chats</a>
     </li>
     <li style="float:right;padding-right:50px">
-        <a href="/user/create">Log In</a>
+        <a href="/user/create" v-if="!loggedIn()">Log In</a>
+        <a style="cursor: pointer;" @click="logOut()" v-else>Log Out (\{{userName}})</a>
     </li>
 </ul>
+
+<script>
+    Vue.createApp({
+        data() {
+            return {
+                userName: ''
+            }
+        },
+
+        methods: {
+            async logOut() {
+                const res = await fetch("/user/logout", {
+                    method: "POST"
+                });
+
+                if (res.ok)
+                    window.location.href = "/user/create";
+            },
+
+            loggedIn() {
+                return document.cookie.includes("myUser=")
+            },
+
+            async getUserName() {
+                const res = await fetch("/user/getmyname", {
+                    method: "GET",
+                    headers: { "Accept": "application/json" }
+                });
+
+                const data = await res.json();
+                
+                if (!data.user)
+                    return console.error("Navigation hasn't user name");
+
+                this.userName = data.user.name;
+            }
+        },
+
+        created() {
+            if (this.loggedIn())
+                this.getUserName();
+        }
+    }).mount("#container-navigate");
+</script>

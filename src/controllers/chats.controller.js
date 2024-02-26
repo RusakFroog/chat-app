@@ -2,12 +2,6 @@ import { Chat } from "../models/chat.js";
 import { request, response } from "express";
 
 class AllChatsController {
-    createChat(req, res) {
-        const chatData = req.body;
-
-        const chatName = chatData.name;
-    }
-
     /**
      * @param {request} req 
      * @param {response} res 
@@ -22,13 +16,16 @@ class AllChatsController {
                 const chatObject = {
                     id: chat.id,
                     name: chat.name,
+                    ownerUser: chat.ownerUser,
                     users: chat.getAllUsers()
                 }
 
                 chatsInObjects.push(chatObject);
             });
 
-            res.render("chats.hbs", { chats: chatsInObjects});
+            let myUser = req.cookies.myUser;
+
+            res.render("chats.hbs", {user: myUser, chats: chatsInObjects});
         }
         catch(e) {
             console.error(e);

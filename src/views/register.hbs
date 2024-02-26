@@ -37,6 +37,7 @@
 
                 <p v-if="errorMessage != undefined || errorMessage != '' " style="color: red;" class="error-msg">\{{errorMessage}}</p>
                 <button @click="registerAccount()" class="button button-block"/>REGISTER</button>
+                <p v-if="succesMessage != undefined || succesMessage != '' " style="color: rgb(54, 170, 0);" class="succes-msg">\{{succesMessage}}</p>
             </div>
         </div>
 
@@ -54,6 +55,7 @@
 
                 <p v-if="errorMessage != undefined || errorMessage != '' " style="color: red;" class="error-msg">\{{errorMessage}}</p>
                 <button @click="loginAccount()" class="button button-block"/>LOG IN</button>
+                <p v-if="succesMessage != undefined || succesMessage != '' " style="color: rgb(54, 170, 0);" class="succes-msg">\{{succesMessage}}</p>
             </div>
         </div>
     </div>

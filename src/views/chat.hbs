@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<script src="https://unpkg.com/vue@3"></script>
-<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <link rel="stylesheet" href="/css/chatPage.css"/>
+</head>
+</body>
+{{!-- {{> navigate}} --}}
 
 <div id="main">
 
-<head>
-    <meta charset="utf-8" />
-    <title>\{{titlePage}}</title>
-    <link rel="stylesheet" href="/css/chatPage.css" />
-</head>
-</body>
-{{> navigate}}
+<title>\{{titlePage}}</title>
+
+<button id="exitfromchat-button" @click="exitFromChat()"><a>Exit from chat</a></button>
 
 <section class="msger">
   <main class="msger-chat"> 
@@ -23,7 +25,7 @@
                 {{/if}}">
         <div class="msg-bubble">
             <div class="msg-info">
-                <div class="msg-info-name">{{this.message.user.name}}</div>
+                <div class="msg-info-name">{{this.message.user.name}} {{#if (eq ../user.id this.message.user.id)}} (me) {{/if}}</div>
             </div>  
 
             <div class="msg-text"> {{this.message.context}} </div>

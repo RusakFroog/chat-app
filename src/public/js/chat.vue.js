@@ -14,6 +14,9 @@ Vue.createApp({
             if (this.enteredMessage.trim() == "")
                 return;
 
+            if (this.enteredMessage.length > 150)
+                return;
+
             try {
                 const res = await fetch(`/chat/${this.idChat}/add/message`, {
                     method: "POST",
@@ -29,14 +32,23 @@ Vue.createApp({
         
                     this.socket.emit("server.chat.addMessage", this.user, this.enteredMessage);
                 } else {
-                    console.log("ERROR:", data);
+                    console.error("ERROR:", data);
                 }
 
                 this.enteredMessage = "";
             }
             catch(e) {
-                console.log("error", e);
+                console.error(e);
             }
+        },
+
+        async exitFromChat() {
+            await fetch(`/chat/${this.idChat}/exit`, {
+                method: "POST",
+                headers: { "Accept": "application/json" }
+            });
+
+            window.location.href = "/chats/all";
         },
 
         getFormattedTime(time) {
