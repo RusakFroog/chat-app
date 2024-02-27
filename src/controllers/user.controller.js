@@ -64,7 +64,7 @@ class UserController {
 
         const expiresTime = 5 * 24 * 60 * 60 * 1000;  // 5 days
 
-        res.cookie('myUser', user, {maxAge: expiresTime}).status(201).json({message: 'User logged in!'});
+        res.cookie('myUser', {id: user.id, name: user.name}, {maxAge: expiresTime}).status(201).json({message: 'User logged in!'});
     }
 
     /**

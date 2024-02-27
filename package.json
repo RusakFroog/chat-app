@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon --ext js,mjs,ts,hbs,html --delay 1",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",

@@ -23,7 +23,7 @@ class AllChatsController {
                 chatsInObjects.push(chatObject);
             });
 
-            let myUser = req.cookies.myUser;
+            const myUser = req.cookies.myUser;
 
             res.render("chats.hbs", {user: myUser, chats: chatsInObjects});
         }
