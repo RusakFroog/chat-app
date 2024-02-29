@@ -72,7 +72,7 @@ Vue.createApp({
             divMessage.innerHTML = `
                 <div class="msg-bubble">
                     <div class="msg-info">
-                        <div class="msg-info-name">${user.name}</div>
+                        <div class="msg-info-name">${user.id == this.user?.id ? '' : user.name} </div>
                     </div>
     
                     <div class="msg-text">${message}</div>

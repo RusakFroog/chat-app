@@ -1,3 +1,5 @@
+import { getMessageWithTags } from "./tagsHelper.js";
+
 export default class SocketHelper {
     constructor(io) {
         this.io = io;
@@ -8,17 +10,13 @@ export default class SocketHelper {
     #init() {
         // When a new user connected
         this.io.on('connection', (client) => {
-            // console.log('a user connected to chat', client.id);
-
-            client.on("server.chat.addMessage", (user, msg) => {
+            
+            client.on("server.chat.addMessage", (user, msg) => {                
+                const formattedMessage = getMessageWithTags(user.name, msg);
+                
                 // Emit event for all clients (include this client)
-                this.io.emit("client.chat.newMessage", user, msg);
+                this.io.emit("client.chat.newMessage", user, formattedMessage);
             });
-
-            // client.on("disconnect", () => {
-                // this.io.emit("client.chat.userDisconnected", client)
-                //// console.log('a user has disconnected from chat', client.id);
-            // });
         });
     }
 }

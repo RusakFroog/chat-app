@@ -25,10 +25,10 @@
                 {{/if}}">
         <div class="msg-bubble">
             <div class="msg-info">
-                <div class="msg-info-name">{{this.message.user.name}} {{#if (eq ../user.id this.message.user.id)}} (me) {{/if}}</div>
+                <div class="msg-info-name">{{#if (eq (eq ../user.id this.message.user.id) false)}} {{this.message.user.name}} {{/if}}</div>
             </div>  
 
-            <div class="msg-text"> {{this.message.context}} </div>
+            <div class="msg-text">{{{getMessage ../user.name this.message.context}}}</div>
 
             <div class="msg-info">
                 <div class="msg-info-time">{{getFormattedTime this.message.time}}</div>

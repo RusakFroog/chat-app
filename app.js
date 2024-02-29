@@ -10,12 +10,12 @@ import HomeRouter from "./src/routes/home.routes.js";
 import ChatsRouter from "./src/routes/chats.routes.js";
 import ChatRouter from "./src/routes/chat.routes.js";
 import UserRouter from "./src/routes/user.routes.js";
+import { getMessageWithTags } from "./src/helpers/tagsHelper.js";
 
 import { User } from './src/models/user.js';
 
 import http from 'http';
 import cookieParser from 'cookie-parser';
-import session from 'express-session';
 import { Server } from 'socket.io';
 import SocketHelper from './src/helpers/sockets.js';
 
@@ -39,6 +39,10 @@ hbs.registerHelper("getFormattedTime", (time) => {
     res += minutes.toString().length == 1 ? `0${minutes}` : minutes;
 
     return res;
+});
+
+hbs.registerHelper("getMessage", (userName, message) => {
+    return getMessageWithTags(userName, message);
 });
 
 hbs.registerHelper("eq", (arg1, arg2) => {

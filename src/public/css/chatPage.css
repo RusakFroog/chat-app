@@ -2,14 +2,18 @@
 	ENTER MESSAGE FIELDS 
 */
 :root {
-	--body-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 	--msger-bg: #fff;
 	--border: 0px solid #000000;
-	--left-msg-bg: #887c15;
-	--right-msg-bg: #206c83;
+	--other-msg-color: #222121;
+	--mine-msg-color: #FBAB7E;
 }
 
 /* html {
+
+	background-color: #FBAB7E;
+	background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
+
+
 	box-sizing: border-box;
 } */
   
@@ -33,6 +37,7 @@
 	background: var(--msger-bg);
 	box-shadow: 0 15px 15px -5px rgba(0, 0, 0, 0.2);
 	background-color: #0f0f0f;
+	background-image: url('https://wallpapers.com/images/high/whatsapp-chat-background-fb34cc4b2hg9lmix.webp');
 	height: 800px;
 }
 
@@ -69,16 +74,17 @@
 }
 
 .msger-chat::-webkit-scrollbar {
-	width: 6px;
+	width: 3px;
 }
 
 .msger-chat::-webkit-scrollbar-track {
-	background: #575555;
-
+	background: #5a5959;
+	opacity: 0.2;
 }
 
 .msger-chat::-webkit-scrollbar-thumb {
-	background: #b6b4b4;
+	background: #b9a914;
+	opacity: 0.2;
 }
 
 .msg {
@@ -104,10 +110,13 @@
 
 .msg-bubble {
 	max-width: 500px;
-	/* padding: 2px; */
 	padding-left: 10px;
-	border-radius: 10px;
-	background: var(--left-msg-bg);
+	border-radius: 20px;
+	background: var(--other-msg-color);
+}
+
+.msg-text {
+	margin-top: 10px;
 }
 
 .msg-info {
@@ -119,25 +128,24 @@
 
 .msg-info-name {
 	font-size: 0.85em;
-	margin-right: 2px;
-	margin-bottom: 3px;
 	margin-top: 2px;
 	float: left;
-	color: rgb(28, 32, 32);
+	color: rgb(223, 223, 223);
 }
 
 .msg-info-time {
 	font-size: 0.8em;
 	margin-bottom: 5px;
 	margin-left: 90%;
-	color: rgb(30, 34, 34);
+	color: rgb(255, 219, 219);
 }
 
 .left-msg .msg-bubble {
-	margin-bottom: 10px;
+	margin-bottom: 6px;
 	border-bottom-left-radius: 0;
 	margin-left: 5px;
 	width: 50%;
+	color: #fff;
 }
   
 .right-msg {
@@ -147,8 +155,9 @@
 }
 
 .right-msg .msg-bubble {
-	margin-bottom: 10px;
-	background: var(--right-msg-bg);
+	margin-bottom: 6px;
+	background: var(--mine-msg-color);
+	background-image: linear-gradient(62deg, #aa7e65 0%, #af985e 100%);
 	color: #fff;
 	border-bottom-right-radius: 0;
 }
@@ -191,6 +200,17 @@
 
 .msger-send-btn:hover {
 	background: rgb(0, 180, 50);
+}
+
+.hightlight-tag {
+	padding: 3px;
+	background-color: #26608f;
+	border-radius: 5px;
+}
+
+.hightlight-tag:hover {
+	cursor: pointer;
+	background-color: #3b7eb6;
 }
 
 .msger-chat {

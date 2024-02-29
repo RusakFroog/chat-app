@@ -96,6 +96,13 @@ export class User {
     static getUserById(id) {
         return User._allUsers.find(u => u.id == id);
     }
+    
+    /**
+     * @param {string} name
+     */
+    static getUserByName(name) {
+        return User._allUsers.find(u => u.name == name);
+    }
 
     /**
      * @param {Chat} chat 
