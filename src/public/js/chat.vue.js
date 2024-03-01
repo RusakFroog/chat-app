@@ -5,7 +5,12 @@ Vue.createApp({
             idChat: undefined,
             enteredMessage: '',
             socket: null,
-            user: null
+            user: null,
+            modalProfile: {
+                show: false,
+                name: '',
+                createDate: '',
+            },
         }
     },
 
@@ -85,6 +90,8 @@ Vue.createApp({
     
             const msgchat = document.querySelector(".msger-chat");
             msgchat.appendChild(divMessage);
+
+            this.srollDownChat();
         },
 
         loadPageTitle() {
@@ -94,15 +101,63 @@ Vue.createApp({
             this.titlePage += this.idChat; 
         },
 
+        async seeProfile(name) {
+            const res = await fetch(`/user/${name}`, {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+
+            const jsonData = await res.json();
+
+            if (res.status == 404)
+                return console.log(jsonData.message);
+
+            this.showModalProfile(jsonData.user);
+        },
+
+        showModalProfile(user) {
+            const NAME_MONTH = {
+                0: "Feb",
+                1: "Mar",
+                2: "Apr",
+                3: "May",
+                4: "Jun",
+                5: "Jul",
+                6: "Aug",
+                7: "Sept",
+                8: "Oct",
+                9: "Nov",
+                10: "Dec",
+                11: "Jan",
+            };
+
+            this.modalProfile.name = user.name;
+            this.modalProfile.createDate = `${new Date(user.createDate).getDate()} ${NAME_MONTH[new Date(user.createDate).getMonth()]} ${new Date(user.createDate).getFullYear()}`;
+            this.modalProfile.show = true;
+        },
+
+        hideModalProfile() {
+            if (!this.modalProfile.show)
+                return;
+
+            this.modalProfile.show = false;
+        },
+
         socketInit() {
             this.socket = io();
 
             this.socket.on("client.chat.newMessage", (user, message) => this.createNewMessage(user, message));
-        }
+        },
+
+        srollDownChat() {
+            const chatContainer = document.getElementsByClassName("msger-chat")[0];
+            chatContainer.scrollTo(0, chatContainer.scrollHeight);
+        },
     },
 
     mounted() {
         this.socketInit();
         this.loadPageTitle();
+        this.srollDownChat();
     }
 }).mount("#main");

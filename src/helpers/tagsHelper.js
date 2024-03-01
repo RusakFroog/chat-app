@@ -24,15 +24,9 @@ function getAllFilteredTags(message) {
     return filteredTags;
 }
 
-/**
- * @param {string} localUserName 
- * @param {string} message 
- */
-export function getMessageWithTags(localUserName, message) {
-    const filteredTags = getAllFilteredTags(message);
-
-    for (const tag of filteredTags) {
-        const start = `<span class="hightlight-tag"`;
+function replaceTags(localUserName, tags, message) {
+    for (const tag of tags) {
+        const start = `<span class="hightlight-tag" @click="seeProfile('${tag.slice(1)}')"`;
         const center = (('@' + localUserName == tag) ? ` style="color:red;"> ${tag}` : `> ${tag}`);
         const end = `</span>`;
         
@@ -40,6 +34,18 @@ export function getMessageWithTags(localUserName, message) {
 
         message = message.replaceAll(tag, resultString);
     }
+
+    return message;
+}
+
+/**
+ * @param {string} localUserName 
+ * @param {string} message 
+ */
+export function getMessageWithTags(localUserName, message) {
+    const filteredTags = getAllFilteredTags(message);
+
+    message = replaceTags(localUserName, filteredTags, message);
 
     return message;
 }

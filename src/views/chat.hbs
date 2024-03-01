@@ -25,7 +25,7 @@
                 {{/if}}">
         <div class="msg-bubble">
             <div class="msg-info">
-                <div class="msg-info-name">{{#if (eq (eq ../user.id this.message.user.id) false)}} {{this.message.user.name}} {{/if}}</div>
+                <div class="msg-info-name" @click="seeProfile('{{this.message.user.name}}')">{{#if (eq (eq ../user.id this.message.user.id) false)}} {{this.message.user.name}} {{/if}}</div>
             </div>  
 
             <div class="msg-text">{{{getMessage ../user.name this.message.context}}}</div>
@@ -36,7 +36,6 @@
         </div>
     </div>
     {{/each}}
-
   </main>
 
   <div class="msger-inputarea">
@@ -44,6 +43,14 @@
     <button type="submit" @click="submitMessage()" class="msger-send-btn">Send</button>
   </div>
 
+  <!-- Profile -->
+  <div id="modal-profile" v-show="modalProfile.show == true">
+    <div class="modal-content">
+      <span class="close-modal" @click="hideModalProfile()">&times;</span>
+      <p id="modal-field"><span>Name: </span> \{{modalProfile.name}}</p>
+      <p id="modal-field"><span>Create date: </span> \{{modalProfile.createDate}}</p>
+    </div>
+  </div>
 </section>
 
 <body>

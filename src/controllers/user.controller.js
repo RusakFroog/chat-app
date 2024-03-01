@@ -4,18 +4,6 @@ import { request, response } from "express";
 import { db } from "../models/database.js";
 
 class UserController { 
-    /**
-     * @param {request} req 
-     * @param {response} res 
-     */
-    getUser(req, res) {
-        const idUser = req.params["id"];
-
-        const user = User.getUserById(parseInt(idUser));
-
-        res.json({user: user});
-    }
-    
     getCreatePage(_, res) {
         res.render("register.hbs");
     }
@@ -94,6 +82,7 @@ class UserController {
 
         let createData = req.body.createData;
         createData.id = User.lastId;
+        createData.createDate = new Date();
 
         const isUserDataValid = User.valid(createData);
 
@@ -115,6 +104,25 @@ class UserController {
      */
     getMyName(req, res) {
         res.json({user: req.cookies.myUser});
+    }
+    
+    /**
+     * @param {request} req 
+     * @param {response} res
+     */
+    getUser(req, res) {
+        const userName = req.params["name"];
+
+        const user = User.getUserByName(userName);
+
+        if (user == undefined)
+            return res.status(404).json({message: `No user with name ${userName}`});
+
+        res.json({user: {
+            id: user.id,
+            name: user.name,
+            createDate: user.createDate,
+        }});
     }
 
     /**

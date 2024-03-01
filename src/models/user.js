@@ -16,6 +16,8 @@ export class User {
     constructor(createData) {
         this.id = createData.id;
         this.name = createData.login;
+        
+        this.createDate = createData.createDate;
          
         /**
          * @private
@@ -37,14 +39,15 @@ export class User {
      * @param {User} user 
      */
     static async addUserToDB(user) {
-        await db.query("INSERT INTO `users` (`name`, `password`, `created_date`) VALUES(?, ?, ?)", [user.name, user._password, new Date()]);
+        await db.query("INSERT INTO `users` (`name`, `password`, `created_date`) VALUES(?, ?, ?)", [user.name, user._password, user._createDate]);
     }
 
-    static createUserFromDB(id, name) {
+    static createUserFromDB(id, name, createDate) {
         const createData = {
             id: id,
             login: name,
-            password: ""
+            password: "",
+            createDate: createDate,
         };
 
         User.lastId = id + 1;
@@ -59,7 +62,7 @@ export class User {
         usersTables.forEach(async (userData) => {
             const chatsTable = await db.query("SELECT * FROM `chats` WHERE `owner_id` = ?", [userData.id]);
 
-            const createdUser = User.createUserFromDB(userData.id, userData.name, userData.password);
+            const createdUser = User.createUserFromDB(userData.id, userData.name, userData.created_date);
             
             const chats = [];
 
