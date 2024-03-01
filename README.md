@@ -22,21 +22,34 @@ Functional:
   <a href="https://socket.io" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/socketio/socketio-ar21.svg" alt="hbs" width="160" height="80"/></a> 
 </p>
 
+# Upd 0.2 - 0.2.2
+### Added:
+```bash 
+
+- Tags @ - you can tag other user
+  - If someone tagged you, you will tagged by red color
+- Updated design of chat
+- Added profile view
+- Added profile view
+```
+<p><img align="center" src="https://i.imgur.com/SCJv43S.png" alt="upd"/></p>
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 # Views
 
 ## Home page
 
-<p><img width="1380" height="500" align="center" src="https://i.imgur.com/JZQkzZ7.png" alt="home"/></p>
+<p><img align="center" src="https://i.imgur.com/JZQkzZ7.png" alt="home"/></p>
 
 ## Chats page
 
-<p><img width="1380" height="500" align="center" src="https://i.imgur.com/fJWP36R.png" alt="chats"/></p>
+<p><img align="center" src="https://i.imgur.com/fJWP36R.png" alt="chats"/></p>
 
 ## Log In/Sign Up page
 
-<p><img width="1380" height="500" align="center" src="https://i.imgur.com/kYSMFHE.png" alt="login"/></p>
-<p><img width="1380" height="500" align="center" src="https://i.imgur.com/UOGdqpA.png" alt="sigup"/></p>
+<p><img align="center" src="https://i.imgur.com/kYSMFHE.png" alt="login"/></p>
+<p><img align="center" src="https://i.imgur.com/UOGdqpA.png" alt="sigup"/></p>
 
 ## Chat page
 
-<p><img width="1380" height="500" align="center" src="https://i.imgur.com/Sk7aJAk.png" alt="chat"/></p>
+<p><img align="center" src="https://i.imgur.com/Sk7aJAk.png" alt="chat"/></p>
